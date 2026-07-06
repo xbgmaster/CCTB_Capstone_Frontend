@@ -35,7 +35,7 @@ export default function BrowseJobsPage() {
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-ink-900">Browse jobs</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Browse jobs</h1>
           <p className="text-sm text-ink-500">
             Showing {filtered.length} of {jobs.length} listings.
           </p>

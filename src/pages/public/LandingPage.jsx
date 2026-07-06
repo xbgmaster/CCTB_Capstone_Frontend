@@ -23,17 +23,17 @@ export default function LandingPage() {
 
   return (
     <div>
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-50 via-white to-blue-50">
+      <section className="relative overflow-hidden from-brand-50 via-white to-blue-50">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(249,115,22,0.08),transparent_50%)]" />
         <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:flex lg:items-center lg:gap-12 lg:px-8 lg:py-28">
           <div className="lg:w-1/2">
             <span className="badge-brand">Built for Canadian trades</span>
-            <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-ink-900 sm:text-5xl lg:text-6xl">
+            <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
               Find your next <span className="text-brand-600">build</span>.
               <br />
               Hire the right hands.
             </h1>
-            <p className="mt-5 max-w-xl text-lg text-ink-600">
+            <p className="mt-5 max-w-xl text-lg" >
               Jobnet connects construction companies and general-services employers with verified,
               skilled workers across Canada - in real time.
             </p>
@@ -134,11 +134,11 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="bg-ink-50 py-16 sm:py-20">
+      <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-ink-900">Fresh job opportunities</h2>
+              <h2 className="text-2xl font-bold tracking-tight">Fresh job opportunities</h2>
               <p className="mt-1 text-sm text-ink-500">Updated in real time as employers post new work.</p>
             </div>
             <Link to="/jobs" className="hidden text-sm font-semibold text-brand-600 hover:underline sm:inline-flex">

@@ -10,12 +10,15 @@
   }
 
   body {
-    @apply bg-ink-50 text-ink-900;
+    @apply bg-ink-50 text-ink-900; background: linear-gradient(135deg, #091a3e 0%, #154593 100%);
   }
 
   *:focus-visible {
     @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-white;
   }
+
+  h1, p, h2 { color: white; }
+
 }
 
 @layer components {
@@ -24,7 +27,7 @@
       transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-primary {
-    @apply btn bg-brand-600 text-white shadow-sm hover:bg-brand-700 active:bg-brand-800;
+    @apply btn bg-brand-600 text-white shadow-sm hover:bg-brand-700 active:bg-brand-800; background-color: white; color: #091a3e;
   }
   .btn-secondary {
     @apply btn border border-ink-200 bg-white text-ink-800 hover:border-ink-300 hover:bg-ink-50;
