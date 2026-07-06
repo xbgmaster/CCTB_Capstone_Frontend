@@ -1,69 +1,78 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
-import heroImg from "./assets/hero.png";
-import "./App.css";
+import { Navigate, Route, Routes } from 'react-router-dom';
+import AppLayout from './components/layout/AppLayout.jsx';
+import RoleGuard from './components/auth/RoleGuard.jsx';
+import { ROLES } from './data/seed.js';
 
-function App() {
-	return (
-		<>
-			<div className='hero-container'>
-				{/* Navbar Header */}
-				<header className='hero-header'>
-					<nav className='hero-nav'>
-						<a href='#home' className='nav-link'>
-							HOME
-						</a>
-						<a href='#jobs' className='nav-link'>
-							FIND JOB
-						</a>
-						<a href='#reviews' className='nav-link'>
-							REVIEWS
-						</a>
-					</nav>
-					<div className='auth-buttons'>
-						<button className='btn-signup'>SIGN UP</button>
-						<button className='btn-login'>LONG IN</button>
-					</div>
-				</header>
+import LandingPage from './pages/public/LandingPage.jsx';
+import HowItWorksPage from './pages/public/HowItWorksPage.jsx';
+import BrowseJobsPage from './pages/public/BrowseJobsPage.jsx';
+import JobDetailPage from './pages/public/JobDetailPage.jsx';
+import CompaniesPage from './pages/public/CompaniesPage.jsx';
+import CompanyDetailPage from './pages/public/CompanyDetailPage.jsx';
+import LoginPage from './pages/auth/LoginPage.jsx';
+import RegisterPage from './pages/auth/RegisterPage.jsx';
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage.jsx';
+import NotFoundPage from './pages/system/NotFoundPage.jsx';
+import ForbiddenPage from './pages/system/ForbiddenPage.jsx';
+import NotificationsPage from './pages/shared/NotificationsPage.jsx';
 
-				{/* Hero Content */}
-				<div className='hero-content'>
-					<h1 className='hero-title'>
-						FIND YOUR NEXT <br /> JOB IN MINUTES.
-					</h1>
-					<p className='hero-subtitle'>
-						THOUSANDS OF VERIFIED JOB, APPLY IN ONE CLICK
-					</p>
+import EmployerRoutes from './pages/employer/EmployerRoutes.jsx';
+import WorkerRoutes from './pages/worker/WorkerRoutes.jsx';
+import AdminRoutes from './pages/admin/AdminRoutes.jsx';
 
-					{/* Search Bar Form */}
-					<div className='search-bar'>
-						<div className='search-input-group'>
-							<span className='input-icon'>🔍</span>
-							<input
-								type='text'
-								placeholder='busqueda'
-								className='search-input'
-							/>
-						</div>
+export default function App() {
+  return (
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route index element={<LandingPage />} />
+        <Route path="about" element={<HowItWorksPage />} />
+        <Route path="jobs" element={<BrowseJobsPage />} />
+        <Route path="jobs/:id" element={<JobDetailPage />} />
+        <Route path="companies" element={<CompaniesPage />} />
+        <Route path="companies/:id" element={<CompanyDetailPage />} />
 
-						<div className='divider-line'></div>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="forgot-password" element={<ForgotPasswordPage />} />
 
-						<div className='search-input-group'>
-							<span className='input-icon'>📍</span>
-							<input
-								type='text'
-								placeholder='city or location'
-								className='search-input'
-							/>
-						</div>
+        <Route
+          path="notifications"
+          element={
+            <RoleGuard allowed={[ROLES.EMPLOYER, ROLES.WORKER, ROLES.ADMIN]}>
+              <NotificationsPage />
+            </RoleGuard>
+          }
+        />
 
-						<button className='btn-find'>FIND NOW</button>
-					</div>
-				</div>
-			</div>
-		</>
-	);
+        <Route
+          path="employer/*"
+          element={
+            <RoleGuard allowed={[ROLES.EMPLOYER]}>
+              <EmployerRoutes />
+            </RoleGuard>
+          }
+        />
+        <Route
+          path="worker/*"
+          element={
+            <RoleGuard allowed={[ROLES.WORKER]}>
+              <WorkerRoutes />
+            </RoleGuard>
+          }
+        />
+        <Route
+          path="admin/*"
+          element={
+            <RoleGuard allowed={[ROLES.ADMIN]}>
+              <AdminRoutes />
+            </RoleGuard>
+          }
+        />
+
+        <Route path="forbidden" element={<ForbiddenPage />} />
+        <Route path="404" element={<NotFoundPage />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
+      </Route>
+    </Routes>
+  );
 }
-
-export default App;
