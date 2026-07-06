@@ -5,7 +5,8 @@
 //   - Uniform error shape (throws ApiError with .status and .body)
 
 const BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL || 'http://localhost:5080/api'
+  //import.meta.env.VITE_API_BASE_URL || 'http://localhost:5080/api'
+  import.meta.env.VITE_API_BASE_URL || 'https://capstone-backend-j6tr.onrender.com/api'
 ).replace(/\/+$/, '');
 
 const TOKEN_KEY = 'jobnet.token.v1';
