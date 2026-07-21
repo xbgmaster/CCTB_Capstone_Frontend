@@ -71,7 +71,7 @@ export default function Navbar() {
 								end
 								className={({ isActive }) => {
 									const base =
-										"text-[0.85rem] font-semibold uppercase tracking-[0.12em] transition-all duration-200 pb-1";
+										"inline-block text-[0.85rem] font-semibold uppercase tracking-[0.12em] transition-all duration-300 transform pb-2 hover:-translate-y-[2px]";
 
 									if (isActive) {
 										return `${base} border-b-2 border-[var(--sky-light)] text-[var(--white)] opacity-100`;
