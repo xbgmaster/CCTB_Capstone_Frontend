@@ -268,7 +268,7 @@ export default function LandingPage() {
 				</div>
 			</section>
 
-			<section className='bg-ink-900 py-16'>
+			<section className='hero-bg bg-ink-900 py-16'>
 				<div className='mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8'>
 					<h2 className='text-3xl font-bold text-white'>
 						Ready to get to work?
