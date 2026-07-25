@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
-import { HardHat } from 'lucide-react';
 
 export default function AuthShell({ title, subtitle, children, footer }) {
   return (
     <div className="mx-auto flex min-h-[calc(100vh-8rem)] max-w-md flex-col justify-center px-4 py-12">
       <div className="text-center">
         <Link to="/" className="inline-flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-600 text-white shadow-sm">
-            <HardHat size={18} />
+          <span className="text-xl text-[var(--sky-light)]">●</span>
+          <span
+            className="text-lg font-bold uppercase tracking-wide text-[var(--white)]"
+            style={{ fontFamily: 'var(--font-display)' }}>
+            Jobnet
           </span>
-          <span className="text-lg font-bold text-ink-900" style={{color:"white"}}>Jobnet</span>
         </Link>
       </div>
       <div className="card mt-6 p-7">
