@@ -50,7 +50,13 @@
   }
 
   .card {
-    @apply rounded-xl border border-ink-200 bg-white shadow-card;
+    @apply rounded-xl border border-ink-200 bg-ink-50 text-ink-900 shadow-card;
+  }
+
+  .card p,
+  .card li,
+  .card span {
+    @apply text-ink-700;
   }
 
   .badge {

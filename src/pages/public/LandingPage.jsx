@@ -127,7 +127,7 @@ export default function LandingPage() {
 						<h2 className='text-3xl font-bold tracking-tight text-ink-900'>
 							Built for both sides
 						</h2>
-						<p className='mt-3 text-ink-600'>
+						<p className='mt-3 text-ink-700'>
 							Whether you're staffing a tower fit-out or looking for your next
 							gig, Jobnet gives you the tools to move quickly and confidently.
 						</p>
