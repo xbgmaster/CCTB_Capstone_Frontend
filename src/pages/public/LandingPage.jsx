@@ -62,10 +62,10 @@ export default function LandingPage() {
 						<div className='mt-10 grid grid-cols-3 gap-6 border-t border-ink-200/60 pt-6'>
 							{HERO_STATS.map((s) => (
 								<div key={s.key}>
-									<p className='text-2xl font-bold text-ink-900'>
+									<p className='text-2xl font-bold text-white'>
 										{counts[s.key]}
 									</p>
-									<p className='text-xs uppercase tracking-wide text-ink-500'>
+									<p className='text-xs uppercase tracking-wide text-brand-200'>
 										{s.label}
 									</p>
 								</div>

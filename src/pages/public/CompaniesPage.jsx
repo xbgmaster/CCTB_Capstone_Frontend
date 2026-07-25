@@ -25,7 +25,7 @@ export default function CompaniesPage() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Companies</h1>
-          <p className="text-sm text-ink-500">{filtered.length} verified employers hiring on Jobnet.</p>
+          <p className="text-sm text-ink-150">{filtered.length} verified employers hiring on Jobnet.</p>
         </div>
         <div className="relative w-full max-w-sm">
           <Search size={14} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-400" />

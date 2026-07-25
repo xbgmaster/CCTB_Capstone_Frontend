@@ -4,10 +4,10 @@ export default function DashboardLayout({ title, subtitle, nav = [] }) {
 	return (
 		<div className='mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8'>
 			<div className='mb-6'>
-				<h1 className='text-2xl font-bold tracking-tight text-ink-900'>
+				<h1 className='text-2xl font-bold tracking-tight text-ink-50'>
 					{title}
 				</h1>
-				{subtitle && <p className='mt-1 text-sm text-ink-500'>{subtitle}</p>}
+				{subtitle && <p className='mt-1 text-sm text-ink-100'>{subtitle}</p>}
 			</div>
 
 			<div className='grid gap-6 lg:grid-cols-[220px_1fr]'>

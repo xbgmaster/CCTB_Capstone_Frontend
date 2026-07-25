@@ -60,10 +60,10 @@ export default function HowItWorksPage() {
 	return (
 		<div className='mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8'>
 			<div className='text-center'>
-				<h1 className='text-3xl font-bold tracking-tight text-ink-900'>
+				<h1 className='text-3xl font-bold tracking-tight text-ink-50'>
 					How Jobnet works
 				</h1>
-				<p className='mx-auto mt-2 max-w-2xl text-ink-600'>
+				<p className='mx-auto mt-2 max-w-2xl text-ink-50'>
 					Two simple flows - one for hiring teams, one for workers. Built to
 					remove friction so projects start sooner.
 				</p>

@@ -9,11 +9,11 @@ export default function AuthShell({ title, subtitle, children, footer }) {
           <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-600 text-white shadow-sm">
             <HardHat size={18} />
           </span>
-          <span className="text-lg font-bold text-ink-900">Jobnet</span>
+          <span className="text-lg font-bold text-ink-900" style={{color:"white"}}>Jobnet</span>
         </Link>
       </div>
       <div className="card mt-6 p-7">
-        <h1 className="text-xl font-bold text-ink-900">{title}</h1>
+        <h1 className="text-xl font-bold text-ink-900" >{title}</h1>
         {subtitle && <p className="mt-1 text-sm text-ink-500">{subtitle}</p>}
         <div className="mt-5">{children}</div>
       </div>
