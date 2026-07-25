@@ -17,7 +17,7 @@ export default function AuthShell({ title, subtitle, children, footer }) {
         {subtitle && <p className="mt-1 text-sm text-ink-500">{subtitle}</p>}
         <div className="mt-5">{children}</div>
       </div>
-      {footer && <div className="mt-5 text-center text-sm text-ink-600">{footer}</div>}
+      {footer && <div className="mt-5 text-center text-sm text-ink-100">{footer}</div>}
     </div>
   );
 }
