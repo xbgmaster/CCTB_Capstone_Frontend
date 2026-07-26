@@ -35,7 +35,7 @@ export default function LandingPage() {
 
 	return (
 		<div>
-			<section className='hero-bg  relative overflow-hidden from-brand-50 via-white to-blue-50'>
+			<section className='hero-bg relative overflow-hidden'>
 				<div className='absolute inset-0 bg-[radial-gradient(circle_at_top_right,transparent_50%)]' />
 				<div className='relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:flex lg:items-center lg:gap-12 lg:px-8 lg:py-28'>
 					<div className='lg:w-1/2'>
@@ -65,7 +65,7 @@ export default function LandingPage() {
 									<p className='text-2xl font-bold text-white'>
 										{counts[s.key]}
 									</p>
-									<p className='text-xs uppercase tracking-wide text-brand-200'>
+									<p className='text-xs uppercase tracking-wide text-white/70'>
 										{s.label}
 									</p>
 								</div>
@@ -167,7 +167,7 @@ export default function LandingPage() {
 				</div>
 			</section>
 
-			<section className=' hero-bg py-16 sm:py-20'>
+			<section className='hero-bg py-16 sm:py-20'>
 				<div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
 					<div className='flex items-end justify-between'>
 						<div>
@@ -268,7 +268,7 @@ export default function LandingPage() {
 				</div>
 			</section>
 
-			<section className='hero-bg bg-ink-900 py-16'>
+			<section className='hero-bg py-16'>
 				<div className='mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8'>
 					<h2 className='text-3xl font-bold text-white'>
 						Ready to get to work?
