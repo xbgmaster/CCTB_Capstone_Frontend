@@ -32,6 +32,11 @@
   .btn-secondary {
     @apply btn;
   }
+  .btn-secondary-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold
+      transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50 bg-red-50 text-red-700 border border-red-200 shadow-sm
+      hover:bg-red-100 active:bg-red-200;
+  }
   .btn-ghost {
     @apply btn bg-emerald-50 text-emerald-900 hover:bg-emerald-100;
   }

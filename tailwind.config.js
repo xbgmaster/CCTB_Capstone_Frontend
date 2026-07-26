@@ -22,11 +22,11 @@ export default {
 					200: "#e2e8f0",
 					300: "#cbd5e1",
 					400: "#94a3b8",
-					500: "#94a3b8", // Ajustado para que brille más en el fondo azul
-					600: "#cbd5e1",
+					500: "#94a3b8",
+					600: "#07428a",
 					700: "#334155",
 					800: "#1e293b",
-					900: "#9fb7f0",
+					900: "#023ec8",
 				},
 			},
 			fontFamily: {

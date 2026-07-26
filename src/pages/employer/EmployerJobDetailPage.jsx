@@ -189,7 +189,7 @@ export default function EmployerJobDetailPage() {
               <PlayCircle size={14} /> Reopen
             </button>
           )}
-          <button type="button" onClick={handleDelete} className="btn-secondary text-red-600 hover:bg-red-50">
+          <button type="button" onClick={handleDelete} className="btn-secondary-danger">
             <Trash2 size={14} /> Delete
           </button>
         </div>
@@ -300,7 +300,7 @@ export default function EmployerJobDetailPage() {
                     {a.status !== 'rejected' && a.status !== 'selected' && (
                       <button
                         type="button"
-                        className="btn-secondary text-red-600 hover:bg-red-50"
+                        className="btn-secondary-danger"
                         onClick={() => setStatus(a, 'rejected')}
                       >
                         Not a fit

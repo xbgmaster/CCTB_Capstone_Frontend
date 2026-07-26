@@ -155,7 +155,7 @@ export default function WorkerApplicationsPage() {
                 </div>
                 <div className="mt-3 flex flex-wrap items-center justify-end gap-2">
                   {(a.status === 'submitted' || a.status === 'shortlisted') && (
-                    <button type="button" className="btn-secondary text-red-600 hover:bg-red-50" onClick={() => withdraw(a)}>
+                    <button type="button" className="btn-secondary-danger" onClick={() => withdraw(a)}>
                       <XCircle size={14} /> Withdraw
                     </button>
                   )}
