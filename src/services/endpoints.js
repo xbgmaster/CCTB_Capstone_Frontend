@@ -10,6 +10,7 @@ export const authApi = {
   login:    (email, password) => api.post('/auth/login', { email, password }),
   me:       () => api.get('/auth/me'),
   forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
+  resetPassword: (payload) => api.post('/auth/reset-password', payload),
 };
 
 // ---------- Users (admin) ----------

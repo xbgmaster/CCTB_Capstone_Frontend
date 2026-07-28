@@ -1,22 +1,60 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import AuthShell from './AuthShell.jsx';
 import { useToast } from '../../contexts/NotificationContext.jsx';
+import { ROLES } from '../../data/seed.js';
+import { useAuth } from '../../contexts/AuthContext.jsx';
+
+function dashboardPath(role) {
+  if (role === ROLES.EMPLOYER) return '/employer';
+  if (role === ROLES.WORKER) return '/worker';
+  return '/';
+}
 
 export default function ForgotPasswordPage() {
+  const { forgot, isAuthenticated, currentUser } = useAuth();
   const { toast } = useToast();
+  const location = useLocation();
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+
+  if (isAuthenticated) {
+    console.log(currentUser.role)
+    const fallback = dashboardPath(currentUser.role);
+    return <Navigate to={location.state?.from?.pathname || fallback} replace />;
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSent(true);
-    toast({
-      type: 'info',
-      title: 'Reset link sent',
-      message: 'If an account exists, a reset link has been emailed (demo only).',
-    });
+    setLoading(true);
+
+    try {
+      const result = await forgot(email);
+      if (result.ok) {
+        setSent(true);
+        toast({
+          type: 'success',
+          title: 'If an account exists, a reset link has been emailed.',
+        });
+      } else {
+        toast({ type: 'error', title: 'Restore password failed', message: result.error });
+      }
+    } finally {
+      setLoading(false);
+    }
   };
+
+  
+    //setSent(true);
+    //toast({
+    //  type: 'info',
+    //  title: 'Reset link sent',
+    //  message: 'If an account exists, a reset link has been emailed (demo only).',
+    //});
+
+
 
   return (
     <AuthShell
@@ -34,9 +72,6 @@ export default function ForgotPasswordPage() {
       {sent ? (
         <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
           If <span className="font-semibold">{email}</span> is registered, a reset link is on its way.
-          <p className="mt-2 text-xs text-emerald-700">
-            This is a demo - no email is actually sent. Use the demo accounts to sign in.
-          </p>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">

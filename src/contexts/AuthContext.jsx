@@ -74,6 +74,27 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+  
+  const forgot = useCallback(async (email) => {
+    try {
+      const data = await authApi.forgotPassword(email);
+      return { ok: true, data };
+    } catch (err) {
+      const message = err instanceof ApiError ? err.message : 'Unable to reach the server.';
+      return { ok: false, error: message };
+    }
+  }, []);
+
+  const resetPassword = useCallback(async ({ email, token, newPassword }) => {
+    try {
+      const data = await authApi.resetPassword({ email, token, newPassword });
+      return { ok: true, data };
+    } catch (err) {
+      const message = err instanceof ApiError ? err.message : 'Unable to reach the server.';
+      return { ok: false, error: message };
+    }
+  }, []);
+
   const value = useMemo(
     () => ({
       currentUser,
@@ -84,8 +105,10 @@ export function AuthProvider({ children }) {
       logout,
       register,
       refreshMe,
+      forgot,
+      resetPassword
     }),
-    [currentUser, bootstrapping, login, logout, register, refreshMe],
+    [currentUser, bootstrapping, login, logout, register, refreshMe, forgot, resetPassword],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
