@@ -107,7 +107,7 @@ export default function Navbar() {
 									/>
 								</button>
 								{menuOpen && (
-									<div className='absolute right-0 mt-2 w-56 animate-slide-up overflow-hidden rounded-xl border border-ink-200 bg-white shadow-cardHover'>
+									<div className='absolute right-0 z-50 mt-2 w-56 animate-slide-up overflow-hidden rounded-xl border border-ink-200 bg-white shadow-cardHover'>
 										<div className='border-b border-ink-100 px-4 py-3'>
 											<p className='truncate text-sm font-semibold text-ink-900'>
 												{currentUser.firstName} {currentUser.lastName}
