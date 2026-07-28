@@ -24,16 +24,21 @@
 @layer components {
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold
-      transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50;
+      transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50 bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 active:bg-emerald-800;
   }
   .btn-primary {
-    @apply btn bg-brand-600 text-white shadow-sm hover:bg-brand-700 active:bg-brand-800; background-color: white; color: #091a3e;
+    @apply btn;
   }
   .btn-secondary {
-    @apply btn border border-ink-200 bg-white text-ink-800 hover:border-ink-300 hover:bg-ink-50;
+    @apply btn;
+  }
+  .btn-secondary-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold
+      transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50 bg-red-50 text-red-700 border border-red-200 shadow-sm
+      hover:bg-red-100 active:bg-red-200;
   }
   .btn-ghost {
-    @apply btn text-ink-700 hover:bg-ink-100;
+    @apply btn bg-emerald-50 text-emerald-900 hover:bg-emerald-100;
   }
   .btn-danger {
     @apply btn bg-red-600 text-white hover:bg-red-700;
@@ -50,7 +55,13 @@
   }
 
   .card {
-    @apply rounded-xl border border-ink-200 bg-white shadow-card;
+    @apply rounded-xl border border-ink-200 bg-ink-50 text-ink-900 shadow-card;
+  }
+
+  .card p,
+  .card li,
+  .card span {
+    @apply text-ink-700;
   }
 
   .badge {

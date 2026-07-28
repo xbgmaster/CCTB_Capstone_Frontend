@@ -35,7 +35,7 @@ export function NotificationProvider({ children }) {
 
 function ToastViewport({ toasts, onDismiss }) {
   return (
-    <div className="pointer-events-none fixed bottom-4 right-4 z-[100] flex w-full max-w-sm flex-col gap-2">
+    <div className="pointer-events-none fixed bottom-4 right-4 z-[100] flex w-full max-w-sm flex-col gap-2" style={{background:"#14297a"}}>
       {toasts.map((t) => (
         <ToastItem key={t.id} toast={t} onDismiss={() => onDismiss(t.id)} />
       ))}
@@ -53,8 +53,8 @@ function ToastItem({ toast, onDismiss }) {
 
   return (
     <div
-      className={`pointer-events-auto animate-slide-up rounded-lg border px-4 py-3 shadow-cardHover ${tone}`}
-      role="status"
+      className={`pointer-events-auto animate-slide-up rounded-lg border px-4 py-3 shadow-cardHover ${tone}` }
+      role="status" style={{background:"#14297a"}}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
