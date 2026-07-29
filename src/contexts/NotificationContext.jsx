@@ -35,7 +35,7 @@ export function NotificationProvider({ children }) {
 
 function ToastViewport({ toasts, onDismiss }) {
   return (
-    <div className="pointer-events-none fixed bottom-4 right-4 z-[100] flex w-full max-w-sm flex-col gap-2" style={{background:"#14297a"}}>
+    <div className="pointer-events-none fixed bottom-4 right-4 z-[100] flex w-full max-w-sm flex-col gap-2">
       {toasts.map((t) => (
         <ToastItem key={t.id} toast={t} onDismiss={() => onDismiss(t.id)} />
       ))}
@@ -51,15 +51,33 @@ function ToastItem({ toast, onDismiss }) {
     error: 'border-red-200 bg-red-50 text-red-900',
   }[toast.type] || 'border-ink-200 bg-white text-ink-900';
 
+  const titleColor = {
+    info: 'text-blue-900',
+    success: 'text-emerald-900',
+    warning: 'text-amber-900',
+    error: 'text-red-900',
+  }[toast.type] || 'text-ink-900';
+
+  const messageColor = {
+    info: 'text-blue-800',
+    success: 'text-emerald-800',
+    warning: 'text-amber-800',
+    error: 'text-red-800',
+  }[toast.type] || 'text-ink-700';
+
   return (
     <div
       className={`pointer-events-auto animate-slide-up rounded-lg border px-4 py-3 shadow-cardHover ${tone}` }
-      role="status" style={{background:"#14297a"}}
+      role="status"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          {toast.title && <p className="text-sm font-semibold">{toast.title}</p>}
-          {toast.message && <p className="mt-0.5 text-sm opacity-90">{toast.message}</p>}
+          {toast.title && (
+            <p className={`text-sm font-semibold ${titleColor}`}>{toast.title}</p>
+          )}
+          {toast.message && (
+            <p className={`mt-0.5 text-sm opacity-90 ${messageColor}`}>{toast.message}</p>
+          )}
         </div>
         <button
           type="button"
