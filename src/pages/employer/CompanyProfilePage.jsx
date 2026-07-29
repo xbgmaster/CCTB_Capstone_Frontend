@@ -26,10 +26,18 @@ export default function CompanyProfilePage() {
 
   const update = (field) => (e) => setForm({ ...form, [field]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    updateCompany(company.id, form);
-    toast({ type: 'success', title: 'Company profile saved' });
+    try {
+      await updateCompany(company.id, form);
+      toast({ type: 'success', title: 'Company profile saved' });
+    } catch (err) {
+      toast({
+        type: 'error',
+        title: 'Could not save company profile',
+        message: err?.message || 'Please try again.',
+      });
+    }
   };
 
   return (
