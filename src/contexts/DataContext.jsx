@@ -189,12 +189,16 @@ export function DataProvider({ children }) {
       employeeCount: patch.employeeCount ?? null,
       description: patch.description ?? null,
     };
-    if (Object.prototype.hasOwnProperty.call(patch, 'verified')) {
-      await companiesApi.verify(id, patch.verified);
-    } else {
-      await companiesApi.update(id, payload);
-    }
+    const updated = await companiesApi.update(id, payload);
     await refreshCompanies();
+    return updated;
+  }, [refreshCompanies]);
+
+  // Admin-only: toggle the "verified" badge without touching profile fields.
+  const setCompanyVerified = useCallback(async (id, verified) => {
+    const updated = await companiesApi.verify(id, verified);
+    await refreshCompanies();
+    return updated;
   }, [refreshCompanies]);
 
   // ----- Worker profiles -----
@@ -349,6 +353,7 @@ export function DataProvider({ children }) {
       // mutators
       updateUser,
       updateCompany,
+      setCompanyVerified,
       upsertWorkerProfile,
       addJob,
       updateJob,
@@ -373,7 +378,7 @@ export function DataProvider({ children }) {
     }),
     [
       state,
-      updateUser, updateCompany, upsertWorkerProfile,
+      updateUser, updateCompany, setCompanyVerified, upsertWorkerProfile,
       addJob, updateJob, deleteJob,
       addApplication, updateApplication,
       addReview,

@@ -5,7 +5,7 @@ import { useToast } from '../../contexts/NotificationContext.jsx';
 import StarRating from '../../components/ui/StarRating.jsx';
 
 export default function AdminCompaniesPage() {
-  const { companies, updateCompany, jobs } = useData();
+  const { companies, setCompanyVerified, jobs } = useData();
   const { toast } = useToast();
   const [query, setQuery] = useState('');
 
@@ -18,7 +18,7 @@ export default function AdminCompaniesPage() {
   );
 
   const toggleVerified = (c) => {
-    updateCompany(c.id, { verified: !c.verified });
+    setCompanyVerified(c.id, !c.verified);
     toast({
       type: 'success',
       title: c.verified ? 'Verification removed' : 'Company verified',
