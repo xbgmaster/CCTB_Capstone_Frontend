@@ -15,6 +15,7 @@ import StatusBadge from "../../components/ui/StatusBadge.jsx";
 import StarRating from "../../components/ui/StarRating.jsx";
 import EmptyState from "../../components/ui/EmptyState.jsx";
 import Modal from "../../components/ui/Modal.jsx";
+import MessageThreadModal from "../../components/messaging/MessageThreadModal.jsx";
 
 const TABS = ["all", "submitted", "shortlisted", "selected", "rejected"];
 
@@ -34,6 +35,7 @@ export default function WorkerApplicationsPage() {
 	const [reviewing, setReviewing] = useState(null);
 	const [reviewRating, setReviewRating] = useState(5);
 	const [reviewComment, setReviewComment] = useState("");
+	const [messaging, setMessaging] = useState(null);
 
 	const myApps = useMemo(
 		() =>
@@ -208,13 +210,21 @@ export default function WorkerApplicationsPage() {
 												<Star size={14} /> Review employer
 											</button>
 										)}
-									<button
-										type='button'
-										className='btn-ghost'
-										disabled
-										title='Messaging arrives in a future phase'>
-										<MessageSquare size={14} /> Message
-									</button>
+									{company && (
+										<button
+											type='button'
+											className='btn-secondary'
+											onClick={() =>
+												setMessaging({
+													otherUserId: company.ownerId,
+													otherUserName: company.name,
+													jobId: job.id,
+													jobTitle: job.title,
+												})
+											}>
+											<MessageSquare size={14} /> Message
+										</button>
+									)}
 								</div>
 							</div>
 						);
@@ -265,6 +275,15 @@ export default function WorkerApplicationsPage() {
 					</div>
 				</form>
 			</Modal>
+
+			<MessageThreadModal
+				open={!!messaging}
+				onClose={() => setMessaging(null)}
+				otherUserId={messaging?.otherUserId}
+				otherUserName={messaging?.otherUserName}
+				jobId={messaging?.jobId}
+				jobTitle={messaging?.jobTitle}
+			/>
 		</div>
 	);
 }
