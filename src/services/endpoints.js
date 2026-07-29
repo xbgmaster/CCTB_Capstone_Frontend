@@ -61,6 +61,14 @@ export const reviewsApi = {
   authoredBy:       (userId)     => api.get('/reviews', { query: { authoredBy: userId } }),
 };
 
+// ---------- Messages ----------
+export const messagesApi = {
+  send:         (payload)               => api.post('/messages', payload),
+  conversation: (withUserId, jobId)     => api.get('/messages/conversation', { query: { withUserId, jobId } }),
+  threads:      ()                      => api.get('/messages/threads'),
+  unreadCount:  ()                      => api.get('/messages/unread-count'),
+};
+
 // ---------- Notifications ----------
 export const notificationsApi = {
   mine:        ()    => api.get('/notifications/me'),

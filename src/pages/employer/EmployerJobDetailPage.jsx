@@ -23,6 +23,7 @@ import StarRating from "../../components/ui/StarRating.jsx";
 import Avatar from "../../components/ui/Avatar.jsx";
 import EmptyState from "../../components/ui/EmptyState.jsx";
 import Modal from "../../components/ui/Modal.jsx";
+import MessageThreadModal from "../../components/messaging/MessageThreadModal.jsx";
 
 const TABS = ["all", "submitted", "shortlisted", "selected", "rejected"];
 
@@ -49,6 +50,7 @@ export default function EmployerJobDetailPage() {
 	const [reviewing, setReviewing] = useState(null);
 	const [reviewRating, setReviewRating] = useState(5);
 	const [reviewComment, setReviewComment] = useState("");
+	const [messaging, setMessaging] = useState(null);
 
 	const reload = useCallback(async () => {
 		setLoading(true);
@@ -386,9 +388,15 @@ export default function EmployerJobDetailPage() {
 									</div>
 									<button
 										type='button'
-										className='btn-ghost'
-										disabled
-										title='Messaging will be available in a future phase'>
+										className='btn-secondary'
+										onClick={() =>
+											setMessaging({
+												otherUserId: a.workerId,
+												otherUserName: `${a.workerFirstName} ${a.workerLastName}`.trim(),
+												jobId: job.id,
+												jobTitle: job.title,
+											})
+										}>
 										<MessageSquare size={14} /> Message
 									</button>
 								</div>
@@ -437,6 +445,15 @@ export default function EmployerJobDetailPage() {
 					</div>
 				</form>
 			</Modal>
+
+			<MessageThreadModal
+				open={!!messaging}
+				onClose={() => setMessaging(null)}
+				otherUserId={messaging?.otherUserId}
+				otherUserName={messaging?.otherUserName}
+				jobId={messaging?.jobId}
+				jobTitle={messaging?.jobTitle}
+			/>
 		</div>
 	);
 }

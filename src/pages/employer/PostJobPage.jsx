@@ -37,20 +37,28 @@ export default function PostJobPage() {
 
   const removeSkill = (s) => setSkills(skills.filter((x) => x !== s));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.title.trim() || !form.description.trim() || !form.location.trim() || !form.dueDate) {
       toast({ type: 'error', title: 'Missing fields', message: 'Title, description, location, and due date are required.' });
       return;
     }
-    const job = addJob({
-      ...form,
-      paymentAmount: Number(form.paymentAmount) || 0,
-      skillsRequired: skills,
-      companyId: currentUser.companyId,
-    });
-    toast({ type: 'success', title: 'Job posted', message: 'Your job is now live in the marketplace.' });
-    navigate(`/employer/jobs/${job.id}`);
+    try {
+      const job = await addJob({
+        ...form,
+        paymentAmount: Number(form.paymentAmount) || 0,
+        skillsRequired: skills,
+        companyId: currentUser.companyId,
+      });
+      toast({ type: 'success', title: 'Job posted', message: 'Your job is now live in the marketplace.' });
+      if (job?.id) {
+        navigate(`/employer/jobs/${job.id}`);
+      } else {
+        navigate('/employer/jobs');
+      }
+    } catch (err) {
+      toast({ type: 'error', title: 'Could not post job', message: err?.message || 'Please try again.' });
+    }
   };
 
   return (
