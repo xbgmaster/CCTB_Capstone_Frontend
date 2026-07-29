@@ -6,7 +6,6 @@ import {
 	LogOut,
 	Menu,
 	Settings,
-	User,
 	X,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext.jsx";
@@ -45,6 +44,9 @@ export default function Navbar() {
 	};
 
 	const navLinks = [
+		...(currentUser
+			? [{ to: getDashboardPath(currentUser.role), label: "Dashboard" }]
+			: []),
 		{ to: "/jobs", label: "Browse Jobs" },
 		{ to: "/companies", label: "Companies" },
 		{ to: "/about", label: "How it works" },
@@ -89,11 +91,6 @@ export default function Navbar() {
 					{currentUser ? (
 						<>
 							<NotificationBell />
-							<Link
-								to={getDashboardPath(currentUser.role)}
-								className='hidden text-sm font-medium text-[var(--white)] opacity-90 hover:opacity-100 md:inline-flex'>
-								Dashboard
-							</Link>
 							<div className='relative' ref={menuRef}>
 								<button
 									type='button'
@@ -110,7 +107,7 @@ export default function Navbar() {
 									/>
 								</button>
 								{menuOpen && (
-									<div className='absolute right-0 mt-2 w-56 animate-slide-up overflow-hidden rounded-xl border border-ink-200 bg-white shadow-cardHover'>
+									<div className='absolute right-0 z-50 mt-2 w-56 animate-slide-up overflow-hidden rounded-xl border border-ink-200 bg-white shadow-cardHover'>
 										<div className='border-b border-ink-100 px-4 py-3'>
 											<p className='truncate text-sm font-semibold text-ink-900'>
 												{currentUser.firstName} {currentUser.lastName}
@@ -123,12 +120,6 @@ export default function Navbar() {
 											</p>
 										</div>
 										<div className='py-1'>
-											<Link
-												to={getDashboardPath(currentUser.role)}
-												onClick={() => setMenuOpen(false)}
-												className='flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50'>
-												<User size={14} /> Dashboard
-											</Link>
 											<Link
 												to={
 													currentUser.role === ROLES.EMPLOYER
