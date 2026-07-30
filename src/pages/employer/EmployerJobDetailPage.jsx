@@ -5,10 +5,13 @@ import {
 	CheckCircle2,
 	MessageSquare,
 	PauseCircle,
+	Pencil,
 	PlayCircle,
+	PlusCircle,
 	Star,
 	Trash2,
 	Users,
+	X,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 import { useData } from "../../contexts/DataContext.jsx";
@@ -26,6 +29,25 @@ import Modal from "../../components/ui/Modal.jsx";
 import MessageThreadModal from "../../components/messaging/MessageThreadModal.jsx";
 
 const TABS = ["all", "submitted", "shortlisted", "selected", "rejected"];
+const CATEGORIES = [
+	"Electrical",
+	"Plumbing",
+	"HVAC",
+	"Carpentry",
+	"Painting",
+	"Roofing",
+	"Supervision",
+	"General Labour",
+	"Cleaning",
+	"Other",
+];
+
+// Convert an ISO date (or Date) into the yyyy-MM-dd value an <input type="date"> expects.
+const toDateInput = (value) => {
+	if (!value) return "";
+	const d = new Date(value);
+	return Number.isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 10);
+};
 
 export default function EmployerJobDetailPage() {
 	const { id } = useParams();
@@ -51,6 +73,10 @@ export default function EmployerJobDetailPage() {
 	const [reviewRating, setReviewRating] = useState(5);
 	const [reviewComment, setReviewComment] = useState("");
 	const [messaging, setMessaging] = useState(null);
+	const [editing, setEditing] = useState(false);
+	const [editForm, setEditForm] = useState(null);
+	const [skillInput, setSkillInput] = useState("");
+	const [savingEdit, setSavingEdit] = useState(false);
 
 	const reload = useCallback(async () => {
 		setLoading(true);
@@ -187,6 +213,69 @@ export default function EmployerJobDetailPage() {
 	const hasReviewed = (workerId) =>
 		authoredReviews.some((r) => r.toUserId === workerId && r.jobId === job.id);
 
+	const openEdit = () => {
+		setEditForm({
+			title: job.title || "",
+			category: job.category || "Other",
+			location: job.location || "",
+			description: job.description || "",
+			activity: job.activity || "",
+			dueDate: toDateInput(job.dueDate),
+			paymentType: (job.paymentType || "hourly").toLowerCase(),
+			paymentAmount: job.paymentAmount ?? "",
+			skillsRequired: [...(job.skillsRequired || [])],
+		});
+		setSkillInput("");
+		setEditing(true);
+	};
+
+	const setField = (field) => (e) =>
+		setEditForm((f) => ({ ...f, [field]: e.target.value }));
+
+	const addSkill = () => {
+		const s = skillInput.trim();
+		if (!s || editForm.skillsRequired.includes(s)) return;
+		setEditForm((f) => ({ ...f, skillsRequired: [...f.skillsRequired, s] }));
+		setSkillInput("");
+	};
+
+	const removeSkill = (s) =>
+		setEditForm((f) => ({
+			...f,
+			skillsRequired: f.skillsRequired.filter((x) => x !== s),
+		}));
+
+	const submitEdit = async (e) => {
+		e.preventDefault();
+		if (
+			!editForm.title.trim() ||
+			!editForm.description.trim() ||
+			!editForm.location.trim() ||
+			!editForm.dueDate
+		) {
+			toast({
+				type: "error",
+				title: "Missing fields",
+				message: "Title, description, location, and due date are required.",
+			});
+			return;
+		}
+		setSavingEdit(true);
+		try {
+			await updateJob(job.id, {
+				...editForm,
+				paymentAmount: Number(editForm.paymentAmount) || 0,
+			});
+			setEditing(false);
+			toast({ type: "success", title: "Job updated" });
+			await Promise.all([reload(), refreshJobs()]);
+		} catch (err) {
+			toast({ type: "error", title: "Update failed", message: err.message });
+		} finally {
+			setSavingEdit(false);
+		}
+	};
+
 	return (
 		<div className='space-y-4'>
 			<div className='flex items-center justify-between'>
@@ -196,6 +285,12 @@ export default function EmployerJobDetailPage() {
 					<ArrowLeft size={14} /> Back to jobs
 				</Link>
 				<div className='flex items-center gap-2'>
+					<button
+						type='button'
+						onClick={openEdit}
+						className='btn-secondary'>
+						<Pencil size={14} /> Edit
+					</button>
 					{job.status === "open" ? (
 						<button
 							type='button'
@@ -454,6 +549,154 @@ export default function EmployerJobDetailPage() {
 				jobId={messaging?.jobId}
 				jobTitle={messaging?.jobTitle}
 			/>
+
+			<Modal
+				open={editing}
+				onClose={() => setEditing(false)}
+				size='lg'
+				title='Edit job'
+				footer={
+					<div className='flex justify-end gap-2'>
+						<button
+							type='button'
+							className='btn-secondary'
+							onClick={() => setEditing(false)}>
+							Cancel
+						</button>
+						<button
+							type='submit'
+							form='edit-job-form'
+							className='btn-primary'
+							disabled={savingEdit}>
+							{savingEdit ? "Saving..." : "Save changes"}
+						</button>
+					</div>
+				}>
+				{editForm && (
+					<form id='edit-job-form' onSubmit={submitEdit} className='space-y-4'>
+						<div>
+							<label className='label'>Job title</label>
+							<input
+								className='input'
+								value={editForm.title}
+								onChange={setField("title")}
+								required
+							/>
+						</div>
+						<div className='grid gap-4 sm:grid-cols-2'>
+							<div>
+								<label className='label'>Category</label>
+								<select
+									className='input'
+									value={editForm.category}
+									onChange={setField("category")}>
+									{CATEGORIES.map((c) => (
+										<option key={c}>{c}</option>
+									))}
+								</select>
+							</div>
+							<div>
+								<label className='label'>Location</label>
+								<input
+									className='input'
+									value={editForm.location}
+									onChange={setField("location")}
+									required
+								/>
+							</div>
+						</div>
+						<div>
+							<label className='label'>Description</label>
+							<textarea
+								className='input min-h-[120px] resize-y'
+								value={editForm.description}
+								onChange={setField("description")}
+								required
+							/>
+						</div>
+						<div>
+							<label className='label'>Activity / Schedule</label>
+							<textarea
+								className='input min-h-[80px] resize-y'
+								value={editForm.activity}
+								onChange={setField("activity")}
+							/>
+						</div>
+
+						<div>
+							<label className='label'>Required skills</label>
+							<div className='mt-1 flex flex-wrap items-center gap-2'>
+								{editForm.skillsRequired.map((s) => (
+									<span key={s} className='badge-brand'>
+										{s}
+										<button
+											type='button'
+											onClick={() => removeSkill(s)}
+											className='ml-1 -mr-0.5 rounded-full p-0.5 hover:bg-brand-100'>
+											<X size={10} />
+										</button>
+									</span>
+								))}
+								<div className='flex items-center gap-2'>
+									<input
+										className='input w-44'
+										placeholder='Add a skill...'
+										value={skillInput}
+										onChange={(e) => setSkillInput(e.target.value)}
+										onKeyDown={(e) => {
+											if (e.key === "Enter") {
+												e.preventDefault();
+												addSkill();
+											}
+										}}
+									/>
+									<button
+										type='button'
+										className='btn-secondary'
+										onClick={addSkill}>
+										<PlusCircle size={14} /> Add
+									</button>
+								</div>
+							</div>
+						</div>
+
+						<div className='grid gap-4 sm:grid-cols-3'>
+							<div>
+								<label className='label'>Due date</label>
+								<input
+									type='date'
+									className='input'
+									value={editForm.dueDate}
+									onChange={setField("dueDate")}
+									required
+								/>
+							</div>
+							<div>
+								<label className='label'>Payment type</label>
+								<select
+									className='input'
+									value={editForm.paymentType}
+									onChange={setField("paymentType")}>
+									<option value='hourly'>Hourly</option>
+									<option value='fixed'>Fixed</option>
+									<option value='daily'>Daily</option>
+								</select>
+							</div>
+							<div>
+								<label className='label'>Amount (CAD)</label>
+								<input
+									type='number'
+									min='0'
+									className='input'
+									value={editForm.paymentAmount}
+									onChange={setField("paymentAmount")}
+									required
+								/>
+							</div>
+						</div>
+					</form>
+				)}
+			</Modal>
 		</div>
 	);
 }
