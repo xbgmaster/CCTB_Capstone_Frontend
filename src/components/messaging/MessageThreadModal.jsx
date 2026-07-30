@@ -115,14 +115,16 @@ export default function MessageThreadModal({
             return (
               <div key={m.id} className={`flex ${mine ? 'justify-end' : 'justify-start'}`}>
                 <div
-                  className={`max-w-[75%] rounded-2xl px-3.5 py-2 text-sm ${
+                  className={`max-w-[75%] rounded-2xl px-3.5 py-2 text-sm shadow-sm ${
                     mine
                       ? 'rounded-br-sm bg-brand-600 text-white'
-                      : 'rounded-bl-sm bg-ink-100 text-ink-800'
+                      : 'rounded-bl-sm border border-sky-200 bg-sky-100 text-black'
                   }`}
                 >
-                  <p className="whitespace-pre-wrap break-words">{m.body}</p>
-                  <p className={`mt-1 text-[10px] ${mine ? 'text-white/70' : 'text-ink-400'}`}>
+                  <p className={`whitespace-pre-wrap break-words ${mine ? 'text-white' : '!text-black'}`}>
+                    {m.body}
+                  </p>
+                  <p className={`mt-1 text-[10px] ${mine ? 'text-white/70' : '!text-black/60'}`}>
                     {new Date(m.createdAt).toLocaleString('en-CA', {
                       month: 'short',
                       day: 'numeric',
